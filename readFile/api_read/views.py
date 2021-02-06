@@ -7,21 +7,20 @@ from rest_framework.parsers import MultiPartParser
 
 from .models import File
 from .serializers import FileSerializer
+from .services import FileService
+
+import json
 
 # Create your views here.
-
-@api_view(['GET'])
-@renderer_classes([JSONRenderer, XMLRenderer])
-def file_view(request):
-    file = File('test')
-    result = FileSerializer(file.__dict__)
-    return Response(result.data)
 
 @api_view(['PUT'])
 @parser_classes([MultiPartParser])
 @renderer_classes([JSONRenderer, XMLRenderer])
 def random_line(request):
-    file_obj = request.FILES
-    print(file_obj)
-    print(request.data)
-    return Response({'received data': request.data})
+    content = []
+    for i in request.data['text']:
+        content.append(i.decode("utf-8").replace('\n', ''))
+    service = FileService()
+    file = File(service.random_line(content))
+    result = FileSerializer(file.__dict__)
+    return Response(result.data)
