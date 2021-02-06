@@ -1,7 +1,6 @@
 from django.urls import path, include
-from .views import random_line, highest_occurrence
+from .views import random_line
 
 urlpatterns = [
     path('file/', random_line),
-    path('char/', highest_occurrence),
 ]

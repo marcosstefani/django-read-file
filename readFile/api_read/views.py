@@ -21,15 +21,7 @@ def random_line(request):
     for i in request.data['text']:
         content.append(i.decode("utf-8").replace('\n', ''))
     service = FileService()
-    file = File(service.random_line(content))
+    line = service.random_line(content)
+    file = File(line, service.highest_occurrence(line))
     result = FileSerializer(file.__dict__)
     return Response(result.data)
-
-@api_view(['POST'])
-@parser_classes([JSONParser])
-@renderer_classes([JSONRenderer, XMLRenderer])
-@csrf_exempt
-def highest_occurrence(request):
-    service = FileService()
-    body = request.data['line']
-    return Response(service.highest_occurrence(body))
