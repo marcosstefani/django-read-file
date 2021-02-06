@@ -7,3 +7,12 @@ services:
       context: "./readFile"
     ports:
       - "8000:8000"
+  db-read-file:
+    container_name: db-read-file
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
