@@ -1,5 +1,4 @@
-curl \
- -X PUT "http://127.0.0.1:8000/file/" \
- -H "Accept: application/json" \
- -H "Content-Type: multipart/form-data" \
- -F "text=@file.txt;type=text/plain" \
+line=$(curl -X PUT "http://127.0.0.1:8000/file/" -H "Accept: application/json" -H "Content-Type: multipart/form-data" -F "text=@file.txt;type=text/plain")
+echo $line
+char=$(curl -X POST "http://127.0.0.1:8000/char/" -H "Accept: application/json" -H "Content-Type: application/json" --data "${line}")
+echo $char
