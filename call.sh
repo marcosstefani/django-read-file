@@ -1,8 +1,9 @@
 #!/bin/bash
 set -e
+resp=$(curl -X PUT "http://127.0.0.1:8000/file/" -H "Accept: application/json" -H "Content-Type: multipart/form-data" -F "text=@file.txt;type=text/plain")
 
-line=$(curl -X PUT "http://127.0.0.1:8000/file/" -H "Accept: application/json" -H "Content-Type: multipart/form-data" -F "text=@file.txt;type=text/plain" | jq -r '.line')
-highest_occurrence=$(curl -X PUT "http://127.0.0.1:8000/file/" -H "Accept: application/json" -H "Content-Type: multipart/form-data" -F "text=@file.txt;type=text/plain" | jq -r '.highest_occurrence')
+line=$(jq -r '.line' <<< $resp)
+highest_occurrence=$(jq -r '.highest_occurrence' <<< $resp)
 
 CREATE="
 CREATE TABLE IF NOT EXISTS reading (
